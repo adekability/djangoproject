@@ -1,2 +1,5 @@
 .idea/
 env/
+mysite/mysite/__pycache__/urls.cpython-310.pyc
+mysite/news/__pycache__/
+venv/
