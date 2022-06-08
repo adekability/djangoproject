@@ -1,6 +1,18 @@
 from django.db import models
 
 
+class Category(models.Model):
+    title = models.CharField(max_length=150, db_index=True, verbose_name='Категории')
+
+    class Meta:
+        verbose_name = 'Категории'
+        verbose_name_plural = "Категории"
+        ordering = ['title']
+
+    def __str__(self):
+        return self.title
+
+
 class News(models.Model):
     title = models.CharField(max_length=150, verbose_name='Наименование')
     content = models.TextField(blank=True, verbose_name='Контент')
@@ -8,11 +20,13 @@ class News(models.Model):
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
     photo = models.ImageField(upload_to='photos/%Y/%m/%d/', verbose_name='Фото')
     is_published = models.BooleanField(default=True, verbose_name='Опубликовано')
+    category = models.ForeignKey(Category, on_delete=models.PROTECT, null=True, verbose_name='Категория')
 
     class Meta:
         verbose_name = 'Новость'
         verbose_name_plural = "Новости"
-        ordering = ['-created_at', '-title']
+        ordering = ['-created_at']
 
     def __str__(self):
         return self.title
+
